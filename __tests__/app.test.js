@@ -11,4 +11,11 @@ describe('backend routes', () => {
   afterAll(() => {
     pool.end();
   });
+
+  it('CI test', () => {
+    expect(true).toBeTruthy;
+
+  })
+
+
 });
