@@ -11,7 +11,7 @@ CREATE TABLE publisher (
     name TEXT NOT NULL,
     city TEXT,
     country TEXT
-)
+);
 
 CREATE TABLE author (
   author_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
