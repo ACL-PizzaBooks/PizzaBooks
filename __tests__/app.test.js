@@ -11,4 +11,7 @@ describe('backend routes', () => {
   afterAll(() => {
     pool.end();
   });
+
+  expect(true).toBeTruthy;
+
 });
