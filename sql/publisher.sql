@@ -1,8 +1,0 @@
-DROP TABLE IF EXISTS publisher;
-
-CREATE TABLE publisher (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name TEXT NOT NULL,
-    city TEXT,
-    country TEXT
-)
