@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS reviewers, author, publisher;
+DROP TABLE IF EXISTS reviewers, authors, publisher;
 
 CREATE TABLE reviewers (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
@@ -13,7 +13,7 @@ CREATE TABLE publisher (
     country TEXT
 );
 
-CREATE TABLE author (
+CREATE TABLE authors (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name TEXT NOT NULL, 
   dob DATE,
