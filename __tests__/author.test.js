@@ -61,4 +61,29 @@ describe('author routes', () => {
 
     expect(res.body).toEqual(expectation)
   })
+
+  it('should update one author', async() => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    })
+
+    const res = await request(app)
+    .patch(`/api/v1/pizzabooks/authors/${author.id}`)
+    .send({
+      name: 'Dumpling Dockerson 2.0',
+      dob: '1992-12-16',
+      pob: 'REDACTED'
+    })
+
+    const expected = {
+      id: expect.any(String),
+      name: 'Dumpling Dockerson 2.0',
+      dob: '12/16/1992',
+      pob: 'REDACTED'
+    }
+    expect(res.body).toEqual(expected)
+    expect (await Author.getById(author.id))
+  })
 } )
