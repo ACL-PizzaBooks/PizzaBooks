@@ -24,9 +24,8 @@ CREATE TABLE author (
 );
 
 CREATE TABLE book_authors (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   book_id BIGINT,
-  FOREIGN KEY (book_id) REFERENCES books(id),
   author_id BIGINT,
+  FOREIGN KEY (book_id) REFERENCES books(id),
   FOREIGN KEY (author_id) REFERENCES author(id)
 );
