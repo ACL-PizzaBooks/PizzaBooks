@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Author = require('../lib/models/Author.js');
 
 describe('author routes', () => {
   beforeEach(() => {
@@ -29,5 +30,16 @@ describe('author routes', () => {
     }
 
     expect(res.body).toEqual(expectation)
+  })
+
+  it('should get all authors', async() => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    })
+    const res = await request(app).get('/api/v1/pizzabooks/authors')
+
+    expect(res.body).toEqual([{...author, id: expect.any(String)}])
   })
 } )
