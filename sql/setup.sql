@@ -23,4 +23,10 @@ CREATE TABLE author (
   -- FOREIGN KEY (book_id) REFERENCES book(book_id)
 );
 
-
+CREATE TABLE book_author (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  book_id BIGINT,
+  FOREIGN KEY (book_id) REFERENCES books(id),
+  author_id BIGINT,
+  FOREIGN KEY (author_id) REFERENCES author(id)
+);
