@@ -86,4 +86,17 @@ describe('author routes', () => {
     expect(res.body).toEqual(expected)
     expect (await Author.getById(author.id))
   })
+
+  it('should delete one author by ID', async() => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    })
+
+    const res = await request(app)
+    .delete(`/api/v1/pizzabooks/authors/${author.id}`)
+
+    expect(res.body).toEqual(author)
+  })
 } )
