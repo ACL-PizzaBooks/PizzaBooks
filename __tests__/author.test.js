@@ -12,19 +12,19 @@ describe('author routes', () => {
     pool.end()
   })
 
-  it('should create an author', () => {
+  it('should create an author', async () => {
     const res = await request(app)
     .post(`/api/v1/pizzabooks/authors`)
     .send({
       name: 'Dumpling Dockerson',
-      dob: 1995-12-01,
+      dob: '1995-12-01',
       pob: 'Steamed Bun Town USA'
     })
 
     const expectation = {
       id: expect.any(String),
       name: 'Dumpling Dockerson',
-      dob: 1995-12-01,
+      dob: '12/1/1995',
       pob: 'Steamed Bun Town USA'
     }
 
