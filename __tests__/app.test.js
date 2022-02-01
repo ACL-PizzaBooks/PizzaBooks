@@ -15,7 +15,7 @@ describe('backend routes', () => {
   it('CI test', () => {
     expect(true).toBeTruthy;
 
-  })
+  });
 
 
 });
