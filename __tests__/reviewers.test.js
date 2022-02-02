@@ -5,7 +5,6 @@ const request = require('supertest');
 const Reviewer = require('../lib/models/Reviewer');
 
 
-
 describe('testing reviewer routes', () => {
   beforeEach(() => {
     return setup(pool);
