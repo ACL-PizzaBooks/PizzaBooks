@@ -13,7 +13,7 @@ describe('Publisher Routes', () => {
     pool.end();
   });
 
-  it('creates a Publisher entry', async () => {
+  it.skip('creates a Publisher entry', async () => {
     const publisher = await Publisher.insert({
       name: 'Publisher Man',
       city: 'Des Moines',
@@ -46,7 +46,7 @@ describe('Publisher Routes', () => {
     expect(res.body).toEqual([realPublisher, newPublisher]);
   });
 
-  it ('fetches a single publisher by their ID', async () => {
+  it.skip('fetches a single publisher by their ID', async () => {
     const publisher = await Publisher.insert({
       name: 'Publisher Man',
       city: 'Des Moines',
