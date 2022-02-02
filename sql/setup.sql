@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS reviewers, author, publisher, books;
+DROP TABLE IF EXISTS reviewers, authors, publisher, books, book_authors;
 
 CREATE TABLE reviewers (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
@@ -13,7 +13,7 @@ CREATE TABLE publisher (
     country TEXT
 );
 
-CREATE TABLE author (
+CREATE TABLE authors (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name TEXT NOT NULL, 
   dob DATE,
@@ -30,12 +30,7 @@ CREATE TABLE books (
     title TEXT
 );
 
--- CREATE TABLE books (
---     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
---     publisher_id BIGINT,
---     CONSTRAINT fkey_publisher
---     FOREIGN KEY (publisher_id) REFERENCES publisher(id),
---     released DATE,
---     title TEXT
--- );
-
+CREATE TABLE book_authors (
+  book_id BIGINT REFERENCES books(id),
+  author_id BIGINT REFERENCES author(id)  
+);

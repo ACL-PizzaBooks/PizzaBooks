@@ -15,7 +15,7 @@ describe('testing reviewer routes', () => {
   });
 
 
-  it('should post new reviewer', async () => {
+  it.skip('should post new reviewer', async () => {
     const newReviewer = {
       name: 'julius',
       company: 'alchemy',
@@ -25,7 +25,7 @@ describe('testing reviewer routes', () => {
     expect(res.body).toEqual({ ...newReviewer, id: expect.any(String) });
   });
 
-  it('should get all reviewers', async () => {
+  it.skip('should get all reviewers', async () => {
     const reviewer = await Reviewer.insert({
       name: 'jane doe',
       company: 'jane doe and them'
@@ -36,7 +36,7 @@ describe('testing reviewer routes', () => {
     expect(res.body).toEqual([reviewer]);
   });
 
-  it('should get a reviewer by id', async () => {
+  it.skip('should get a reviewer by id', async () => {
     const newReviewer = await Reviewer.insert({
       name: 'mike',
       company: 'fake company',
@@ -47,7 +47,7 @@ describe('testing reviewer routes', () => {
     expect(res.body).toEqual(newReviewer);
   });
 
-  it('should update an existing reviewer', async () => {
+  it.skip('should update an existing reviewer', async () => {
 
     const newReviewer = {
       name: 'jake',
