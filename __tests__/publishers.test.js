@@ -1,8 +1,8 @@
 const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
-const app = require('../lib/app');
-const request = require('supertest');
-const Publisher = require('../lib/models/Publisher');
+// const app = require('../lib/app');
+// const request = require('supertest');
+// const Publisher = require('../lib/models/Publisher');
 
 describe('Publisher Routes', () => {
   beforeEach(() => {
