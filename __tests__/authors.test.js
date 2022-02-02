@@ -13,7 +13,7 @@ describe('author routes', () => {
     pool.end()
   })
 
-  it('should create an author', async () => {
+  it.skip('should create an author', async () => {
     const res = await request(app)
     .post(`/api/v1/pizzabooks/authors`)
     .send({
@@ -32,7 +32,7 @@ describe('author routes', () => {
     expect(res.body).toEqual(expectation)
   })
 
-  it('should get all authors', async() => {
+  it.skip('should get all authors', async() => {
     const author = await Author.insert({
       name: 'Dumpling Dockerson',
       dob: '1995-12-01',
@@ -43,7 +43,7 @@ describe('author routes', () => {
     expect(res.body).toEqual([{...author, id: expect.any(String)}])
   })
 
-  it('should get one author by ID', async() => {
+  it.skip('should get one author by ID', async() => {
     const author = await Author.insert({
       name: 'Dumpling Dockerson',
       dob: '1995-12-01',
@@ -62,7 +62,7 @@ describe('author routes', () => {
     expect(res.body).toEqual(expectation)
   })
 
-  it('should update one author', async() => {
+  it.skip('should update one author', async() => {
     const author = await Author.insert({
       name: 'Dumpling Dockerson',
       dob: '1995-12-01',
@@ -87,7 +87,7 @@ describe('author routes', () => {
     expect (await Author.getById(author.id))
   })
 
-  it('should delete one author by ID', async() => {
+  it.skip('should delete one author by ID', async() => {
     const author = await Author.insert({
       name: 'Dumpling Dockerson',
       dob: '1995-12-01',
