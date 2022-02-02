@@ -15,7 +15,7 @@ CREATE TABLE publisher (
 
 CREATE TABLE author (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  name TEXT NOT NULL, 
+  name TEXT NOT NULL,
   dob DATE,
   pob TEXT
   -- adding relationship to book table
@@ -23,4 +23,10 @@ CREATE TABLE author (
   -- FOREIGN KEY (book_id) REFERENCES book(book_id)
 );
 
-
+CREATE TABLE reviews (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    rating INT NOT NULL,
+    review TEXT NOT NULL,
+    reviewer_id BIGINT REFERENCES reviewers(id),
+    book_id BIGINT REFERENCES books(id)
+)
