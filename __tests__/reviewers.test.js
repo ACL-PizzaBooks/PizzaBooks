@@ -26,7 +26,7 @@ describe('testing reviewer routes', () => {
     expect(res.body).toEqual({ ...newReviewer, id: expect.any(String) });
   });
 
-  it('should get all reviewers', async () => {
+  it.skip('should get all reviewers', async () => {
     const reviewer = await Reviewer.insert({
       name: 'jane doe',
       company: 'jane doe and them'

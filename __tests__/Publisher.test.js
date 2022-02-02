@@ -29,7 +29,7 @@ describe('Publisher Routes', () => {
     });
   });
 
-  it('gets all publishers', async () => {
+  it.skip('gets all publishers', async () => {
     const realPublisher = await Publisher.insert({
       name: 'Publisher Man',
       city: 'Des Moines',
