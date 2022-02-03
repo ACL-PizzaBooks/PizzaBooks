@@ -1,7 +1,13 @@
-DROP TABLE IF EXISTS reviewers, authors, publisher, books, book_authors;
+DROP TABLE IF EXISTS reviewers CASCADE;
+DROP TABLE IF EXISTS authors CASCADE;
+DROP TABLE IF EXISTS publisher CASCADE;
+DROP TABLE IF EXISTS books CASCADE;
+DROP TABLE IF EXISTS book_authors CASCADE;
+DROP TABLE IF EXISTS reviews CASCADE;
+
 
 CREATE TABLE reviewers (
-    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT NOT NULL,
     company TEXT NOT NULL
 );
@@ -23,13 +29,7 @@ CREATE TABLE authors (
   -- FOREIGN KEY (book_id) REFERENCES book(book_id)
 );
 
-CREATE TABLE reviews (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    rating INT NOT NULL,
-    review TEXT NOT NULL,
-    reviewer_id BIGINT REFERENCES reviewers(id),
-    book_id BIGINT REFERENCES books(id)
-)
+
 CREATE TABLE books (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     publisher_id BIGINT REFERENCES publisher(id),
@@ -37,7 +37,17 @@ CREATE TABLE books (
     title TEXT
 );
 
+CREATE TABLE reviews (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    rating INT CHECK (rating > 0 AND rating < 6),
+    review VARCHAR(140) NOT NULL,
+    reviewer_id BIGINT NOT NULL,
+    FOREIGN KEY (reviewer_id) REFERENCES reviewers(id),
+    book_id BIGINT NOT NULL,
+    FOREIGN KEY (book_id) REFERENCES books(id)
+);
+
 CREATE TABLE book_authors (
   book_id BIGINT REFERENCES books(id),
-  author_id BIGINT REFERENCES author(id)
+  author_id BIGINT REFERENCES authors(id)
 );
