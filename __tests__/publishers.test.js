@@ -38,13 +38,25 @@ describe('Publisher Routes', () => {
     const realPublisher = await Publisher.insert({
       name: 'Publisher Man',
       city: 'Des Moines',
-      country: 'USA'
+      country: 'USA',
+      books: [
+        { id: 1,
+          title:'a book' },
+        { id: 2,
+          title:'another book' }
+      ]
     });
 
     const newPublisher = await Publisher.insert({
       name: 'Publisher Werewolf',
       city: 'Des Moines',
-      country: 'USA'
+      country: 'USA',
+      books: [
+        { id: 3,
+          title:'yet another book' },
+        { id: 4,
+          title:'more book book' }
+      ]
     });
 
     const res = await request(app).get('/api/v1/pizzabooks/publishers');
