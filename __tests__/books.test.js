@@ -17,8 +17,14 @@ describe('Book Routes', () => {
 
   it('creates a Book entry with a Publisher and an Author', async () => {
 
-    const author = await Author.insert({
+    const author1 = await Author.insert({
       name: 'Jr. R. Token',
+      dob: '1930-01-02',
+      pob: 'Portland, OR',
+    });
+
+    const author2 = await Author.insert({
+      name: 'Taylor is cool',
       dob: '1930-01-02',
       pob: 'Portland, OR',
     });
@@ -29,20 +35,31 @@ describe('Book Routes', () => {
       country: 'peru'
     });
 
-    const book = await Book.insert({
-      publisher_id:publisher.id,
-      released: '2/2/22',
-      title: 'hello book', 
-      author_id: author.id
-    });
+    // const book = await Book.insert({
+    //   publisher_id:publisher.id,
+    //   released: '2/2/22',
+    //   title: 'hello book', 
+    //   authors:[author1.id, author2.id]
+    // });
 
     const res = await request(app)
       .post('/api/v1/pizzabooks/books')
-      .send(book);
+      .send({
+        title: 'Lord of the Things',
+        publisher_id: publisher.id,
+        released: '2/2/2022, 12:00:00 AM',
+        authorIds: [author1.id, author2.id],
+      });
 
     expect(res.body).toEqual({
-      ...book,
       id: expect.any(String),
+      title: 'Lord of the Things',
+      publisher_id: expect.any(String),
+      released: '2/2/2022, 12:00:00 AM',
+      authors: [
+        { id: author1.id, name: author1.name },
+        { id: author2.id, name: author2.name },
+      ],
     });
   });
 
