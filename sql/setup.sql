@@ -19,22 +19,20 @@ CREATE TABLE publisher (
     country TEXT
 );
 
-CREATE TABLE authors (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  name TEXT NOT NULL,
-  dob DATE,
-  pob TEXT
-  -- adding relationship to book table
-  -- book_id BIGINT,
-  -- FOREIGN KEY (book_id) REFERENCES book(book_id)
-);
-
-
 CREATE TABLE books (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     publisher_id BIGINT REFERENCES publisher(id),
     released DATE,
     title TEXT
+);
+
+CREATE TABLE authors (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name TEXT NOT NULL,
+  dob DATE,
+  pob TEXT,
+  book_id BIGINT,
+  FOREIGN KEY (book_id) REFERENCES books(id)
 );
 
 CREATE TABLE reviews (
