@@ -55,7 +55,13 @@ describe('Publisher Routes', () => {
     const publisher = await Publisher.insert({
       name: 'Publisher Man',
       city: 'Des Moines',
-      country: 'USA'
+      country: 'USA',
+      books: [
+        { id: 1,
+          title:'a book' },
+        { id: 2,
+          title:'another book' }
+      ]
     });
 
     const res = await request(app).get(`/api/v1/pizzabooks/publishers/${publisher.id}`);
