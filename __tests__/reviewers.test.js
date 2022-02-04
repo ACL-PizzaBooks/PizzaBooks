@@ -65,7 +65,7 @@ describe('testing reviewer routes', () => {
 
     const res = await request(app).get(`/api/v1/pizzabooks/reviewers/${newReviewer.id}`);
 
-    expect(res.body).toEqual({ ...newReviewer }, [{ ...review, id: expect.any(String) }]);
+    expect(res.body).toEqual({ ...newReviewer, reviews: [{ rating: review.rating, review: review.review, id: expect.any(Number), book: { id: Number(book.id), title: book.title } }] });
   });
 
   it('should update an existing reviewer', async () => {
@@ -75,7 +75,26 @@ describe('testing reviewer routes', () => {
       company: 'acme inc',
     };
 
+    const publisher = await Publisher.insert({
+      name: 'turkey',
+      city: 'ashland',
+      country: 'peru'
+    });
+
+    const book = await Book.insert({
+      publisher_id: publisher.id,
+      released: '2/2/22',
+      title: 'hello book'
+    });
     const updateReviewer = await Reviewer.insert(newReviewer);
+
+    const review = await Review.insert({
+      rating: 4.0,
+      review: 'could not put this book down',
+      reviewer_id: updateReviewer.id,
+      book_id: book.id
+    });
+
 
     const res = await request(app).patch(`/api/v1/pizzabooks/reviewers/${updateReviewer.id}`).send({
       name: 'jacob',
@@ -89,6 +108,6 @@ describe('testing reviewer routes', () => {
     };
 
     expect(res.body).toEqual(expectation);
-    expect(await Reviewer.getReviewerById(updateReviewer.id)).toEqual(expectation);
+    expect(await Reviewer.getReviewerById(updateReviewer.id)).toEqual({ ...expectation, reviews: [{ rating: review.rating, review: review.review, id: expect.any(Number), book: { id: Number(book.id), title: book.title } }] });
   });
 });
