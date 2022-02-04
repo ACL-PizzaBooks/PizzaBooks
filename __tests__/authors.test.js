@@ -1,8 +1,8 @@
 const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
-// const request = require('supertest');
-// const app = require('../lib/app');
-// const Author = require('../lib/models/Author.js');
+const request = require('supertest');
+const app = require('../lib/app');
+const Author = require('../lib/models/Author.js');
 
 describe('author routes', () => {
   beforeEach(() => {
@@ -13,95 +13,90 @@ describe('author routes', () => {
     pool.end();
   });
 
-  it('puts the lotion on its skin', async () => {
+  it('should create an author', async () => {
+    const res = await request(app)
+      .post('/api/v1/pizzabooks/authors')
+      .send({
+        name: 'Dumpling Dockerson',
+        dob: '1995-12-01',
+        pob: 'Steamed Bun Town USA'
+      });
 
-    expect(true).toBeTruthy;
+    const expectation = {
+      id: expect.any(String),
+      name: 'Dumpling Dockerson',
+      dob: '12/1/1995',
+      pob: 'Steamed Bun Town USA'
+    };
+
+    expect(res.body).toEqual(expectation);
   });
 
-  // it.skip('should create an author', async () => {
-  //   const res = await request(app)
-  //     .post('/api/v1/pizzabooks/authors')
-  //     .send({
-  //       name: 'Dumpling Dockerson',
-  //       dob: '1995-12-01',
-  //       pob: 'Steamed Bun Town USA'
-  //     });
+  it('should get all authors', async () => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    });
+    const res = await request(app).get('/api/v1/pizzabooks/authors');
 
-  //   const expectation = {
-  //     id: expect.any(String),
-  //     name: 'Dumpling Dockerson',
-  //     dob: '12/1/1995',
-  //     pob: 'Steamed Bun Town USA'
-  //   };
+    expect(res.body).toEqual([{ ...author, id: expect.any(String) }]);
+  });
 
-  //   expect(res.body).toEqual(expectation);
-  // });
+  it('should get one author by ID', async () => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    });
 
-  // it.skip('should get all authors', async() => {
-  //   const author = await Author.insert({
-  //     name: 'Dumpling Dockerson',
-  //     dob: '1995-12-01',
-  //     pob: 'Steamed Bun Town USA'
-  //   });
-  //   const res = await request(app).get('/api/v1/pizzabooks/authors');
+    const res = await request(app).get(`/api/v1/pizzabooks/authors/${author.id}`);
 
-  //   expect(res.body).toEqual([{ ...author, id: expect.any(String) }]);
-  // });
+    const expectation = {
+      id: expect.any(String),
+      name: 'Dumpling Dockerson',
+      dob: '12/1/1995',
+      pob: 'Steamed Bun Town USA'
+    };
 
-  // it.skip('should get one author by ID', async() => {
-  //   const author = await Author.insert({
-  //     name: 'Dumpling Dockerson',
-  //     dob: '1995-12-01',
-  //     pob: 'Steamed Bun Town USA'
-  //   });
+    expect(res.body).toEqual(expectation);
+  });
 
-  //   const res = await request(app).get(`/api/v1/pizzabooks/authors/${author.id}`);
+  it('should update one author', async () => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    });
 
-  //   const expectation = {
-  //     id: expect.any(String),
-  //     name: 'Dumpling Dockerson',
-  //     dob: '12/1/1995',
-  //     pob: 'Steamed Bun Town USA'
-  //   };
+    const res = await request(app)
+      .patch(`/api/v1/pizzabooks/authors/${author.id}`)
+      .send({
+        name: 'Dumpling Dockerson 2.0',
+        dob: '1992-12-16',
+        pob: 'REDACTED'
+      });
 
-  //   expect(res.body).toEqual(expectation);
-  // });
+    const expected = {
+      id: expect.any(String),
+      name: 'Dumpling Dockerson 2.0',
+      dob: '12/16/1992',
+      pob: 'REDACTED'
+    };
+    expect(res.body).toEqual(expected);
+    expect (await Author.getById(author.id));
+  });
 
-  // it.skip('should update one author', async() => {
-  //   const author = await Author.insert({
-  //     name: 'Dumpling Dockerson',
-  //     dob: '1995-12-01',
-  //     pob: 'Steamed Bun Town USA'
-  //   });
-    
-  //   const res = await request(app)
-  //     .patch(`/api/v1/pizzabooks/authors/${author.id}`)
-  //     .send({
-  //       name: 'Dumpling Dockerson 2.0',
-  //       dob: '1992-12-16',
-  //       pob: 'REDACTED'
-  //     });
+  it('should delete one author by ID', async () => {
+    const author = await Author.insert({
+      name: 'Dumpling Dockerson',
+      dob: '1995-12-01',
+      pob: 'Steamed Bun Town USA'
+    });
 
-  //   const expected = {
-  //     id: expect.any(String),
-  //     name: 'Dumpling Dockerson 2.0',
-  //     dob: '12/16/1992',
-  //     pob: 'REDACTED'
-  //   };
-  //   expect(res.body).toEqual(expected);
-  //   expect (await Author.getById(author.id));
-  // });
+    const res = await request(app)
+      .delete(`/api/v1/pizzabooks/authors/${author.id}`);
 
-  // it.skip('should delete one author by ID', async() => {
-  //   const author = await Author.insert({
-  //     name: 'Dumpling Dockerson',
-  //     dob: '1995-12-01',
-  //     pob: 'Steamed Bun Town USA'
-  //   });
-
-  //   const res = await request(app)
-  //     .delete(`/api/v1/pizzabooks/authors/${author.id}`);
-
-  //   expect(res.body).toEqual(author);
-  // });
+    expect(res.body).toEqual(author);
+  });
 });
