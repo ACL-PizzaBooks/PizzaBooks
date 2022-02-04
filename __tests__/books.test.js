@@ -7,6 +7,8 @@ const Author = require('../lib/models/Author');
 const Review = require('../lib/models/Review');
 const Reviewer = require('../lib/models/Reviewer');
 const Publisher = require('../lib/models/Publisher');
+const Book_Author = require('../lib/models/Book_Author');
+
 
 describe('Book Routes', () => {
   beforeEach(() => {
@@ -126,19 +128,24 @@ describe('Book Routes', () => {
       title: 'Lord of the janguss',
       publisher_id: publisher.id,
       released: '2/2/2022, 12:00:00 AM',
-      authors: [{
-        id: author2.id, 
-        name: author2.name 
-      }, {
-        id: author1.id, 
-        name: author1.name 
-      }],
-      reviews: [{
-        rating: 4.0,
-        review: 'could not put this book down',
-        reviewer_id: reviewer.id,
-        book_id: expect.any(String)
-      }]
+    });
+
+    const book_author1 = await Book_Author.insert({
+      book_id: book.id,
+      author_id: author1.id
+    });
+
+    const book_author2 = await Book_Author.insert({
+      book_id: book.id,
+      author_id: author2.id
+    });
+
+
+    const review = await Review.insert({
+      rating: 4.0,
+      review: 'could not put this book down',
+      reviewer_id: reviewer.id,
+      book_id: book.id
     });
 
 
@@ -149,15 +156,16 @@ describe('Book Routes', () => {
     expect(res.body).toEqual({
       id: expect.any(String),
       title: 'Lord of the janguss',
-      publisher_id: publisher.id,
+      publisher: {id: Number(publisher.id), name: publisher.name},
       released: '2/2/2022, 12:00:00 AM',
-      authors: [author2.id, author1.id],
+      authors: [{ id: Number(author1.id), name: author1.name }, { id: Number(author2.id), name: author2.name }],
       reviews: [{
+        id: expect.any(Number),
         rating: 4.0,
         review: 'could not put this book down',
-        reviewer_id: reviewer.id,
-        book_id: expect.any(String)
-      }]
+        reviewer: {id: Number(reviewer.id), name: reviewer.name}
+      }
+    ]
     });
   });
 
