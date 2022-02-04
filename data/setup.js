@@ -1,4 +1,11 @@
 const fs = require('fs').promises;
+const Publisher = require('../lib/models/Publisher.js');
+const Author = require('../lib/models/Author.js');
+const Reviewer = require('../lib/models/Reviewer.js');
+const Book = require('../lib/models/Book.js');
+const Book_Author = require('../lib/models/Book_Author.js');
+const Review = require('../lib/models/Review.js');
+
 
 module.exports = (pool) => {
   return fs
