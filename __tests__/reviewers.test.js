@@ -110,4 +110,15 @@ describe('testing reviewer routes', () => {
     expect(res.body).toEqual(expectation);
     expect(await Reviewer.getReviewerById(updateReviewer.id)).toEqual({ ...expectation, reviews: [{ rating: review.rating, review: review.review, id: expect.any(Number), book: { id: Number(book.id), title: book.title } }] });
   });
+
+  it('it should delete an existing reviewer, getbyid should throw error', async () => {
+    const mockReviewer = {
+      name: 'jake',
+      company: 'acme inc',
+    };
+    const { id } = await Reviewer.insert(mockReviewer);
+    const res = await request(app).delete(`/api/v1/pizzabooks/reviewers/${id}`);
+
+    expect(await Reviewer.getReviewerById(id)).toBeNull;
+  });
 });
