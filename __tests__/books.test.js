@@ -151,8 +151,6 @@ describe('Book Routes', () => {
 
     const res = await request(app).get(`/api/v1/pizzabooks/books/${book.id}`);
 
-    console.log(res.body),
-    console.log('-------------------------------------------------'),
     expect(res.body).toEqual({
       id: expect.any(String),
       title: 'Lord of the janguss',
